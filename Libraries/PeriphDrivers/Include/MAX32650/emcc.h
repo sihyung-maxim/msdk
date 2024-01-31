@@ -46,6 +46,8 @@
 
 /***** Includes *****/
 #include "max32650.h"
+
+#deprecated
 #include "emcc_regs.h"
 
 #ifdef __cplusplus
