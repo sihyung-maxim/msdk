@@ -45,7 +45,7 @@
 #define LIBRARIES_PERIPHDRIVERS_INCLUDE_MAX32650_EMCC_H_
 
 /***** Includes *****/
-#include "max32650.h"
+#include "mxc_devices.h"
 #include "emcc_regs.h"
 
 #ifdef __cplusplus
