@@ -61,13 +61,93 @@ These are the rules for the `Subject`.
         3. `feat(Examples): Add console output in Hello_World READMEs for all parts (#342)`
         4. `fix(Examples,PeriphDrivers): Deprecate MXC\_RTC\_GetSecond and MXC\_RTC\_GetSubSecond for all parts except for MAX32520 (#248)`
 
-Please ensure all actions have passed or successfully completed before merging a PR into `main`. MSDK maintainers have permissions to merge approved PRs even with a failing action.
+Please ensure all actions have passed or successfully completed before merging a PR into `main`. MSDK maintainers have permission to merge approved PRs even with a failing action.
 
 ## PR Format Rules (Workflow Enforced)
 1.  The type is case-sensitive and must be one of the listed types.
 2.  The scope is case-sensitive and must be one of the listed scopes.
 3.  The first word of the Subject must be capitalized.
 4.  The Subject must not end with any punctuation (periods, commas, exclamation marks).
+
+## Copyright Rules
+
+The MSDK is under [Apache License 2.0](https://github.com/Analog-Devices-MSDK/msdk/blob/main/LICENSE). 
+
+All contributors to the MSDK must follow the requirements below to properly maintain the copyrights.
+
+Every file must have this copyright line, where `YEAR` is for the current year: `Copyright (C) YEAR Analog Devices, Inc.`
+
+NOTE: This document will use **2024** as the current year.
+
+### Scenarios
+1. For new files, please include the following format
+```
+/******************************************************************************
+ *
+ * Copyright (C) 2024 Analog Devices, Inc. All Rights Reserved. This software
+ * is proprietary to Analog Devices, Inc. and its licensors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************/
+```
+2. If an existing file was edited, please add on the current year:
+```
+/******************************************************************************
+ *
+ * Copyright (C) 2023-2024 Analog Devices, Inc. All Rights Reserved. This software
+ * is proprietary to Analog Devices, Inc. and its licensors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************/
+```
+3. For files that originated from a third party, please include this line underneath the original party's copyright line:
+
+`Portions Copyright (C) 2024 Analog Devices, Inc.`
+
+Here's an example taken from one of the Bluetooth projects:
+```
+/******************************************************************************
+ *  Copyright (C) 2013-2019 Arm Ltd. All Rights Reserved.
+ *
+ *  Copyright (C) 2019 Packetcraft, Inc.
+ *
+ *  Portions Copyright (C) 2022-2024 Analog Devices, Inc.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ******************************************************************************/
+```
 
 ## Style Guide
 
