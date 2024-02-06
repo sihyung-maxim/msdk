@@ -49,7 +49,7 @@ jobs:
           ref: ${{ fromJSON(steps.get-pr.outputs.result).head.ref }}
           fetch-depth: 0
 
-      - name: Check Copyright.
+      - name: Copyright log.
         run: |
           pwd
 
@@ -58,7 +58,16 @@ jobs:
 
           files_need_copyright=$(python .github/workflows/scripts/check_copyright.py)
 
-          echo "Files to change: $files_need_copyright"
+
+          echo -e "Please refer to the link for instructions on updating the copyright: "
+
+          echo -e "\e[0;31m--------------------------------------------------------------------------------"
+          echo -e "Files to change:\n"
+
+          for file in $files_need_copyright
+          do
+            echo -e "$file"
+          done
 
           if [[ -n $files_need_copyright ]]; then
             exit 1
@@ -66,19 +75,3 @@ jobs:
             echo "All changed files in this PR have the correct copyright."
             exit 0
           fi
-
-      - name: Files with incorrect copyrights detected.
-        if: ${{ failure() }}
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.FORK_TOKEN }}
-          script: |
-            const failmsg = {
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Files with incorrect copyright detected. Please check the actions log for list of affected files and update accordingly.'
-            }
-
-            github.rest.issues.createComment(failmsg)
-
