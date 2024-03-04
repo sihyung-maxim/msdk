@@ -25,7 +25,7 @@
 # in "project.mk", on the command-line, or with system environment 
 # variables.
 
-# See https://analog-devices-msdk.github.io/msdk/USERGUIDE/#build-system
+# See https://analogdevicesinc.github.io/msdk/USERGUIDE/#build-system
 # for more detailed instructions on how to use this system.
 
 # The detailed instructions mentioned above are easier to read than 
@@ -230,7 +230,7 @@ MXC_OPTIMIZE_CFLAGS ?= -Og
 
 # Set compiler flags
 PROJ_CFLAGS += -Wall # Enable warnings
-# PROJ_CFLAGS += -DMXC_ASSERT_ENABLE
+PROJ_CFLAGS += -DMXC_ASSERT_ENABLE
 
 # Set hardware floating point acceleration.
 # Options are:

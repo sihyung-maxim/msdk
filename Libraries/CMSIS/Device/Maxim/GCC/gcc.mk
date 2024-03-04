@@ -287,6 +287,9 @@ endif
 CFLAGS+=$(PROJ_CFLAGS)
 CXXFLAGS+=$(CFLAGS)
 
+C_WARNINGS_AS_ERRORS ?= implicit-function-declaration
+CFLAGS += -Werror=$(C_WARNINGS_AS_ERRORS)
+
 # The command for calling the library archiver.
 AR=${PREFIX}-ar
 
@@ -617,19 +620,41 @@ $(BUILD_DIR)/project_defines.h: $(BUILD_DIR)/_empty_tmp_file.c $(PROJECTMK) | $(
 	@echo "// This is a generated file that's used to detect definitions that have been set by the compiler and build system." > $@
 	@$(CC) -E -P -dD $(BUILD_DIR)/_empty_tmp_file.c $(filter-out -MD,$(CFLAGS)) >> $@
 
+################################################################################
+# Add a rule for querying the value of any Makefile variable.  This is useful for
+# IDEs when they need to figure out include paths, value of the target, etc. for a
+# project
+# Set QUERY_VAR to the variable to inspect.
+# The output must be parsed, since other Makefiles may print additional info strings.
+# The relevant content will be on its own line, and separated by an '=' character.
+# Ex: make query QUERY_VAR=TARGET
+# will return
+# TARGET=MAXxxxxx
+ifeq "$(MAKECMDGOALS)" "query"
+SUPPRESS_HELP := 1
+endif
+.PHONY: query
+query:
+ifneq "$(QUERY_VAR)" ""
+	@echo $(QUERY_VAR)=$($(QUERY_VAR))
+else
+	$(MAKE) debug
+endif
+
 #################################################################################
 SUPPRESS_HELP ?= 0
 ifeq "$(SUPPRESS_HELP)" "0"
 ifneq "$(HELP_COMPLETE)" "1"
 $(info ****************************************************************************)
 $(info * Analog Devices MSDK)
-$(info * - User Guide: https://analog-devices-msdk.github.io/msdk/USERGUIDE/)
+$(info * - User Guide: https://analogdevicesinc.github.io/msdk/USERGUIDE/)
 $(info * - Get Support: https://www.analog.com/support/technical-support.html)
-$(info * - Report Issues: https://github.com/Analog-Devices-MSDK/msdk/issues)
-$(info * - Contributing: https://analog-devices-msdk.github.io/msdk/CONTRIBUTING/)
+$(info * - Report Issues: https://github.com/analogdevicesinc/msdk/issues)
+$(info * - Contributing: https://analogdevicesinc.github.io/msdk/CONTRIBUTING/)
 $(info ****************************************************************************)
 # export HELP_COMPLETE so that it's only printed once.
 HELP_COMPLETE = 1
 export HELP_COMPLETE
 endif
 endif
+

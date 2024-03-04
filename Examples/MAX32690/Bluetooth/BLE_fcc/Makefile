@@ -25,7 +25,7 @@
 # in "project.mk", on the command-line, or with system environment 
 # variables.
 
-# See https://analog-devices-msdk.github.io/msdk/USERGUIDE/#build-system
+# See https://analogdevicesinc.github.io/msdk/USERGUIDE/#build-system
 # for more detailed instructions on how to use this system.
 
 # The detailed instructions mentioned above are easier to read than 
@@ -164,7 +164,6 @@ VPATH := $(VPATH)
 IPATH += .
 IPATH += include
 IPATH := $(IPATH)
-IPATH += ${LIBS_DIR}/MiscDrivers/Display/fonts/
 
 AUTOSEARCH ?= 1
 ifeq ($(AUTOSEARCH), 1)
