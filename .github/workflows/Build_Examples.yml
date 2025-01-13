@@ -35,6 +35,18 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Toolchain versions
+env:
+  ARM_GCC_TOOL_VER: '10.3-2021.10'
+  RISCV_EMBED_GCC_TOOL_VER: '10.2.0-1.2.1'
+  RISCV_ELF_GCC_TOOL_VER: '12.2.0-3.1'
+
+  # Follow the same version as ARM_GCC_TOOL_VER, but the year/month gets combined and the '-' becomes a '.'
+  # Required for Build_Examples_Windows
+  # TODO: Update the job to not require this manual version update.
+  ARM_GCC_TOOLCHAIN_FILE_VER: '10.3.202110'
+
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
     
@@ -149,7 +161,7 @@ jobs:
         id: arm-none-eabi-gcc-action
         if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
         with:
-          release: '10.3-2021.10' # <-- The compiler release to use
+          release: ${{ env.ARM_GCC_TOOL_VER }} # <-- The compiler release to use
           
       - name: Install RISCV GCC Toolchain (riscv-none-embed-gcc)
         if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
@@ -157,12 +169,11 @@ jobs:
           # Install RISCV tools
           npm install --global xpm@latest
           
-          TOOL_VER=10.2.0-1.2.1
-          xpm install --global @xpack-dev-tools/riscv-none-embed-gcc@$TOOL_VER
+          xpm install --global @xpack-dev-tools/riscv-none-embed-gcc@${{ env.RISCV_EMBED_GCC_TOOL_VER }}
           cp -r /home/runner/.local/xPacks/@xpack-dev-tools/riscv-none-embed-gcc /home/runner/riscv-none-embed-gcc
           
           # Add riscv tools to path
-          echo "/home/runner/riscv-none-embed-gcc/$TOOL_VER/.content/bin" >> $GITHUB_PATH
+          echo "/home/runner/riscv-none-embed-gcc/${{ env.RISCV_EMBED_GCC_TOOL_VER }}/.content/bin" >> $GITHUB_PATH
 
       - name: Install RISCV GCC Toolchain (riscv-none-elf-gcc)
         if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
@@ -171,12 +182,11 @@ jobs:
           npm install --global xpm@latest
           
           # https://www.npmjs.com/package/@xpack-dev-tools/riscv-none-elf-gcc
-          TOOL_VER=12.2.0-3.1
-          xpm install --global @xpack-dev-tools/riscv-none-elf-gcc@$TOOL_VER
+          xpm install --global @xpack-dev-tools/riscv-none-elf-gcc@${{ env.RISCV_ELF_GCC_TOOL_VER }}
           cp -r /home/runner/.local/xPacks/@xpack-dev-tools/riscv-none-elf-gcc /home/runner/riscv-none-elf-gcc
           
           # Add riscv tools to path
-          echo "/home/runner/riscv-none-elf-gcc/$TOOL_VER/.content/bin" >> $GITHUB_PATH
+          echo "/home/runner/riscv-none-elf-gcc/${{ env.RISCV_ELF_GCC_TOOL_VER }}/.content/bin" >> $GITHUB_PATH
 
       - name: Install ccache
         if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
@@ -358,7 +368,7 @@ jobs:
         id: arm-none-eabi-gcc-action
         if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
         with:
-          release: '10.3-2021.10' # <-- The compiler release to use
+          release: ${{ env.ARM_GCC_TOOL_VER }} # <-- The compiler release to use
           
       - name: Install RISCV GCC Toolchain (riscv-none-embed-gcc)
         if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
@@ -366,12 +376,11 @@ jobs:
           # Install RISCV tools
           npm install --global xpm@latest
           
-          TOOL_VER=10.2.0-1.2.1
-          xpm install --global @xpack-dev-tools/riscv-none-embed-gcc@$TOOL_VER
+          xpm install --global @xpack-dev-tools/riscv-none-embed-gcc@${{ env.RISCV_EMBED_GCC_TOOL_VER }}
           cp -r $HOME/AppData/Roaming/xPacks/@xpack-dev-tools/riscv-none-embed-gcc $GITHUB_WORKSPACE/riscv-none-embed-gcc
           
           # Add riscv tools to path
-          echo "$GITHUB_WORKSPACE/riscv-none-embed-gcc/$TOOL_VER/.content/bin" >> $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/riscv-none-embed-gcc/${{ env.RISCV_EMBED_GCC_TOOL_VER }}/.content/bin" >> $GITHUB_PATH
         shell: bash
 
       - name: Install RISCV GCC Toolchain (riscv-none-elf-gcc)
@@ -381,8 +390,7 @@ jobs:
           npm install --global xpm@latest
           
           # https://www.npmjs.com/package/@xpack-dev-tools/riscv-none-elf-gcc
-          TOOL_VER=12.2.0-3.1
-          xpm install --global @xpack-dev-tools/riscv-none-elf-gcc@$TOOL_VER
+          xpm install --global @xpack-dev-tools/riscv-none-elf-gcc@${{ env.RISCV_ELF_GCC_TOOL_VER }}
           cp -r $HOME/AppData/Roaming/xPacks/@xpack-dev-tools/riscv-none-elf-gcc $GITHUB_WORKSPACE/riscv-none-elf-gcc
           
           # Add riscv tools to path
@@ -397,43 +405,40 @@ jobs:
 
           # Prepend ccache into the PATH
           echo "$ProgramFiles/sccache" >> $GITHUB_PATH
-          
-          # Update to match version within "Install RISCV GCC Toolchain (riscv-none-embed-gcc)" step
-          TOOL_VER=10.2.0-1.2.1
 
           # Setup sccache links
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-addr2line.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-ar.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-as.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-c.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-c++filt.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-cpp.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-elfedit.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-g.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcc.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcc-10.2.1.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin//arm-none-eabi-gcc-ar.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcc-nm.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcc-ranlib.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcov.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcov-dump.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gcov-tool.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gdb-add-index.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gdb-add-index-py.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gdb-py.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-gprof.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-ld.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-ld.bfd.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-lto-dump.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-nm.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-objcopy.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-objdump.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-ranlib.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-readelf.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-size.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-strings.exe
-          ln -s $ProgramFiles/sccache/sccache.exe ${{ steps.arm-none-eabi-gcc-action.outputs.path }}/bin/arm-none-eabi-strip.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $GITHUB_WORKSPACE/riscv-none-elf-gcc/$TOOL_VER/.content/bin/riscv-none-embed-gcc.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-addr2line.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-ar.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-as.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-c.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-c++filt.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-cpp.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-elfedit.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-g.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcc.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcc-10.2.1.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcc-ar.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcc-nm.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcc-ranlib.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcov.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcov-dump.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gcov-tool.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gdb-add-index.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gdb-add-index-py.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gdb-py.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-gprof.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-ld.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-ld.bfd.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-lto-dump.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-nm.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-objcopy.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-objdump.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-ranlib.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-readelf.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-size.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-strings.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOLCHAIN_FILE_VER }}-win32-x64/gcc-arm-none-eabi-${{ env.ARM_GCC_TOOL_VER }}/bin/arm-none-eabi-strip.exe
+          ln -s $ProgramFiles/sccache/sccache.exe $GITHUB_WORKSPACE/riscv-none-elf-gcc/${{ env.RISCV_ELF_GCC_TOOL_VER }}/.content/bin/riscv-none-embed-gcc.exe
         shell: bash
 
       - name: Setup Python
