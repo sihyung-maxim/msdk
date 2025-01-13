@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +65,7 @@
 
 //
 // Enabling this will use the afe timer to timeout polling of the AFE.
-//  This avoid any chance of the blocking function afe_spi_transceive from never returning.
+//  This avoids any chance of the blocking function afe_spi_transceive from never returning.
 //  However, as this low level function can be called several times for even a single
 //  AFE register read, it decreases throughput to and from the AFE.
 //  When running at lower system clock frequencies this can be more of a concern.
@@ -525,7 +524,7 @@ static int afe_spi_transceive(uint8_t *data, int byte_length)
 #else // Not AFE_SPI_TRANSCEIVE_SAFE_BUT_SLOWER
 
 //
-// This function blocks until transceive is completed, or times out
+// This function blocks until transceive is completed
 //  This version does not use the afe timer to interrupt potential infinite polling.
 //
 static int afe_spi_transceive(uint8_t *data, int byte_length)

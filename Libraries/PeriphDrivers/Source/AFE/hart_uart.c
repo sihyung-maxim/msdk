@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -174,9 +173,11 @@ static int hart_uart_init(mxc_uart_regs_t *uart, unsigned int baud, mxc_uart_clo
         MXC_AFE_GPIO_Config(&gpio_cfg_extclk);
         break;
 
+#if TARGET_NUM != 32675
     case MXC_UART_ERTCO_CLK:
         return E_BAD_PARAM;
         break;
+#endif
 
     case MXC_UART_IBRO_CLK:
         MXC_SYS_ClockSourceEnable(MXC_SYS_CLOCK_IBRO);
@@ -192,12 +193,12 @@ static int hart_uart_init(mxc_uart_regs_t *uart, unsigned int baud, mxc_uart_clo
 
     switch (MXC_UART_GET_IDX(uart)) {
     case 0:
-        MXC_AFE_GPIO_Config(&gpio_cfg_uart0);
+        MXC_AFE_GPIO_Config(&gpio_cfg_hart);
         MXC_SYS_ClockEnable(MXC_SYS_PERIPH_CLOCK_UART0);
         break;
 
     case 2:
-        MXC_AFE_GPIO_Config(&gpio_cfg_uart2);
+        MXC_AFE_GPIO_Config(&gpio_cfg_hart);
         MXC_SYS_ClockEnable(MXC_SYS_PERIPH_CLOCK_UART2);
         break;
 
@@ -211,6 +212,14 @@ static int hart_uart_init(mxc_uart_regs_t *uart, unsigned int baud, mxc_uart_clo
     }
 
     // Set RX threshold to 1 byte
+    // Note, to meet HART TPDLL needs, each received byte must be handled singularly, to verify
+    //  it for (vertical: parity bit) parity, framing errors, and gap error.
+    //  This HART UART driver currently checks parity, and framing errors, but gap must be
+    //  handled by TPDLL or application code.
+    //
+    // To increase threshold would require restructuring of the receiver to monitor gaps
+    //  and to parse when and if comm errors occur, as there could be multiple bytes in
+    //  the FIFO, and the errors would only apply to the most recent.
     retval = MXC_UART_SetRXThreshold(uart, 1);
     if (retval != E_NO_ERROR) {
         return retval;
@@ -478,7 +487,7 @@ static int hart_uart_pins_external_test_mode_state(void)
     int retval = 0;
     mxc_gpio_cfg_t hart_pin;
 
-    // RTS Input to AFE, LOW is transmit mode, so Pulling Up
+    // HART_RTS Input to AFE, LOW is transmit mode, so Pulling Up
     hart_pin.port = HART_RTS_GPIO_PORT;
     hart_pin.mask = HART_RTS_GPIO_PIN;
     hart_pin.pad = MXC_GPIO_PAD_PULL_UP;
@@ -489,30 +498,33 @@ static int hart_uart_pins_external_test_mode_state(void)
         return retval;
     }
 
-    // CD output from AFE, Tristate
+    // HART_CD output from AFE, Tristate
     hart_pin.port = HART_CD_GPIO_PORT;
     hart_pin.mask = HART_CD_GPIO_PIN;
     hart_pin.pad = MXC_GPIO_PAD_NONE;
+    hart_pin.func = MXC_GPIO_FUNC_IN;
 
     retval = MXC_AFE_GPIO_Config(&hart_pin);
     if (retval != E_NO_ERROR) {
         return retval;
     }
 
-    // IN input to AFE, pulling Up
+    // HART_IN input to AFE, pulling Up
     hart_pin.port = HART_IN_GPIO_PORT;
     hart_pin.mask = HART_IN_GPIO_PIN;
     hart_pin.pad = MXC_GPIO_PAD_PULL_UP;
+    hart_pin.func = MXC_GPIO_FUNC_IN;
 
     retval = MXC_AFE_GPIO_Config(&hart_pin);
     if (retval != E_NO_ERROR) {
         return retval;
     }
 
-    // IN output from AFE, Tristate
+    // HART_OUT output from AFE, Tristate
     hart_pin.port = HART_OUT_GPIO_PORT;
     hart_pin.mask = HART_OUT_GPIO_PIN;
     hart_pin.pad = MXC_GPIO_PAD_NONE;
+    hart_pin.func = MXC_GPIO_FUNC_IN;
 
     retval = MXC_AFE_GPIO_Config(&hart_pin);
     if (retval != E_NO_ERROR) {
@@ -644,9 +656,9 @@ int hart_clock_enable(void)
     pPTG->intfl = 0x01;
 
     //enable ISO before enabling ERFO
-    MXC_GCR->btleldoctrl |= (MXC_F_GCR_BTLELDOCTRL_LDOTXEN | MXC_F_GCR_BTLELDOCTRL_LDORXEN |
-                             MXC_F_GCR_BTLELDOCTRL_LDOTXVSEL0 | MXC_F_GCR_BTLELDOCTRL_LDOTXVSEL1 |
-                             MXC_F_GCR_BTLELDOCTRL_LDORXVSEL0 | MXC_F_GCR_BTLELDOCTRL_LDORXVSEL1);
+    MXC_GCR->btleldoctrl |=
+        (MXC_F_GCR_BTLELDOCTRL_LDORFEN | MXC_F_GCR_BTLELDOCTRL_LDOBBEN |
+         MXC_S_GCR_BTLELDOCTRL_LDORFVSEL_0_9 | MXC_S_GCR_BTLELDOCTRL_LDOBBVSEL_0_9);
 
     MXC_GCR->clkctrl |= MXC_F_GCR_CLKCTRL_ISO_EN;
 
@@ -933,7 +945,12 @@ int hart_uart_setup(uint32_t test_mode)
     } else {
         hart_rts_receive_mode();
 
-        retval = hart_uart_init(HART_UART_INSTANCE, 1200, MXC_UART_ERFO_CLK);
+        //
+        // NOTE: Need to use APB clock here instead of ERFO.
+        //   Otherwise in a case for ERFO clock is faster than the System/Peripheral
+        //   clock UART interrupts will not or only partially work.
+        //
+        retval = hart_uart_init(HART_UART_INSTANCE, 1200, MXC_UART_APB_CLK);
         if (retval != E_NO_ERROR) {
             return E_COMM_ERR;
         }
@@ -1008,6 +1025,9 @@ int hart_uart_load_tx_fifo(void)
         return 0;
     }
 
+    // Ensure accurate index, dont allow uart interrupt while we manually load the fifo
+    MXC_UART_DisableInt(HART_UART_INSTANCE, (MXC_F_UART_INT_FL_TX_HE | MXC_F_UART_INT_FL_TX_OB));
+
     num_written = MXC_UART_WriteTXFIFO(
         HART_UART_INSTANCE, (const unsigned char *)(hart_buf + hart_uart_transmission_byte_index),
         load_num);
@@ -1015,6 +1035,9 @@ int hart_uart_load_tx_fifo(void)
     // Advance index based on bytes actually written.
     // This should always equal load_num though.
     hart_uart_transmission_byte_index += num_written;
+
+    // Restore interrupts
+    MXC_UART_EnableInt(HART_UART_INSTANCE, (MXC_F_UART_INT_FL_TX_HE | MXC_F_UART_INT_FL_TX_OB));
 
     // Return the number actually written in case someone is interested.
     return num_written;
@@ -1303,7 +1326,7 @@ void hart_cd_isr(void *cbdata)
     }
 }
 
-int hart_uart_check_for_receive()
+int hart_uart_check_for_receive(void)
 {
     // NOTE: RTS is placed into receive mode by hart_uart_send
     // Receive mode is default operation for the HART UART

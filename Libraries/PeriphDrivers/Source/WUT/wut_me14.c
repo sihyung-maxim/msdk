@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +106,19 @@ void MXC_WUT_IntClear(void)
 }
 
 /* ************************************************************************* */
+void MXC_WUT_ClearFlags(void)
+{
+    MXC_WUT_RevA_IntClear((mxc_wut_reva_regs_t *)MXC_WUT);
+}
+
+/* ************************************************************************* */
 uint32_t MXC_WUT_IntStatus(void)
+{
+    return MXC_WUT_RevA_IntStatus((mxc_wut_reva_regs_t *)MXC_WUT);
+}
+
+/* ************************************************************************* */
+uint32_t MXC_WUT_GetFlags(void)
 {
     return MXC_WUT_RevA_IntStatus((mxc_wut_reva_regs_t *)MXC_WUT);
 }
@@ -144,7 +155,19 @@ void MXC_WUT_Edge(void)
 }
 
 /* ************************************************************************** */
+void MXC_WUT_WaitForEdge(void)
+{
+    MXC_WUT_RevA_Edge((mxc_wut_reva_regs_t *)MXC_WUT);
+}
+
+/* ************************************************************************** */
 void MXC_WUT_Store(void)
+{
+    MXC_WUT_RevA_Store((mxc_wut_reva_regs_t *)MXC_WUT);
+}
+
+/* ************************************************************************** */
+void MXC_WUT_StoreCount(void)
 {
     MXC_WUT_RevA_Store((mxc_wut_reva_regs_t *)MXC_WUT);
 }
@@ -235,7 +258,7 @@ int MXC_WUT_Handler(void)
     mxc_wut_complete_cb_t cbTemp;
 
     /* Clear the interrupt flags */
-    MXC_WUT_IntClear();
+    MXC_WUT_ClearFlags();
 
     if (!trimPending) {
         return E_NO_ERROR;

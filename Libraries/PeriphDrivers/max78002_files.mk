@@ -1,9 +1,8 @@
 ###############################################################################
  #
- # Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- # (now owned by Analog Devices, Inc.),
- # Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- # is proprietary to Analog Devices, Inc. and its licensors.
+ # Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by
+ # Analog Devices, Inc.),
+ # Copyright (C) 2023-2024 Analog Devices, Inc.
  #
  # Licensed under the Apache License, Version 2.0 (the "License");
  # you may not use this file except in compliance with the License.
@@ -46,12 +45,14 @@ INCLUDE_DIR := $(PERIPH_DIR)/Include
 
 PERIPH_DRIVER_INCLUDE_DIR += $(INCLUDE_DIR)/$(TARGET_UC)/
 
+# Expose a "PINS_FILE" option for easily overriding the pin definitions
+PINS_FILE ?= $(SOURCE_DIR)/SYS/pins_ai87.c
+
 # Source files
-PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/SYS/mxc_assert.c
-PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/SYS/mxc_delay.c
-PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/SYS/mxc_lock.c
-PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/SYS/nvic_table.c
-PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/SYS/pins_ai87.c
+
+
+
+PERIPH_DRIVER_C_FILES += $(PINS_FILE)
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/SYS/sys_ai87.c
 
 PERIPH_DRIVER_INCLUDE_DIR += $(SOURCE_DIR)/ADC
@@ -70,9 +71,14 @@ PERIPH_DRIVER_INCLUDE_DIR += $(SOURCE_DIR)/CRC
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/CRC/crc_ai87.c
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/CRC/crc_reva.c
 
+ifneq "$(RISCV_CORE)" "1"
+ifneq "$(RISCV_CORE)" "RV32"
+# The RISC-V core does not have access to the CSI2 peripheral.
 PERIPH_DRIVER_INCLUDE_DIR += $(SOURCE_DIR)/CSI2
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/CSI2/csi2_ai87.c
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/CSI2/csi2_reva.c
+endif
+endif
 
 PERIPH_DRIVER_INCLUDE_DIR += $(SOURCE_DIR)/DMA
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/DMA/dma_ai87.c
@@ -167,5 +173,3 @@ PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/WDT/wdt_revb.c
 PERIPH_DRIVER_INCLUDE_DIR += $(SOURCE_DIR)/WUT
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/WUT/wut_ai87.c
 PERIPH_DRIVER_C_FILES += $(SOURCE_DIR)/WUT/wut_reva.c
-
-

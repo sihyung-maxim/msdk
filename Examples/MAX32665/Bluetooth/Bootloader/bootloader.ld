@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +19,7 @@
  ******************************************************************************/
 
 BOOTLOADER_ORIGIN = 0x10000000;
-BOOTLOADER_LEN = 0x4000;
+BOOTLOADER_LEN = 0x8000;
 FLASH_SECTION_LEN = 0x80000 - BOOTLOADER_LEN;
 FLASH0_ORIGIN = BOOTLOADER_ORIGIN + BOOTLOADER_LEN;
 

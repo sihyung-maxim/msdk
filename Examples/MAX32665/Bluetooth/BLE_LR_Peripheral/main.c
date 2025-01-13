@@ -75,8 +75,7 @@
 /**************************************************************************************************
   Global Variables
 **************************************************************************************************/
-extern uint8_t appCodedPhyDemo;
-
+#warning "(ERROR): Exmaple is deprecated and non functional!"
 /*! \brief  Pool runtime configuration. */
 static wsfBufPoolDesc_t mainPoolDesc[] = { { 16, 8 }, { 32, 4 }, { 192, 8 }, { 256, 8 } };
 
@@ -208,7 +207,7 @@ int main(void)
 #endif
     PalCfgLoadData(PAL_CFG_ID_LL_PARAM, &mainLlRtCfg.maxAdvSets, sizeof(LlRtCfg_t) - 9);
 #if (BT_VER >= LL_VER_BT_CORE_SPEC_5_0)
-    PalCfgLoadData(PAL_CFG_ID_BLE_PHY, &mainLlRtCfg.phy2mSup, 4);
+    PalCfgLoadData(PAL_CFG_ID_BLE_PHY, (uint8_t *)&mainLlRtCfg.phy2mSup, 4);
 #endif
 
     /* Set the 32k sleep clock accuracy into one of the following bins, default is 20
@@ -240,7 +239,6 @@ int main(void)
     APP_TRACE_INFO0("Long range demo (coded-PHY s=8)");
     APP_TRACE_INFO0("===============================");
     APP_TRACE_INFO1("BT_VER: %d", BT_VER);
-    appCodedPhyDemo = 1;
 
 #if defined(HCI_TR_EXACTLE) && (HCI_TR_EXACTLE == 1)
     WsfCsEnter();

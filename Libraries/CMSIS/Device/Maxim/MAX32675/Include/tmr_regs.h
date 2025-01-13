@@ -7,10 +7,9 @@
 
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +50,11 @@ extern "C" {
 #define __IO volatile
 #endif
 #ifndef __I
-#define __I  volatile const
+#ifdef __cplusplus
+#define __I volatile
+#else
+#define __I volatile const
+#endif
 #endif
 #ifndef __O
 #define __O  volatile
@@ -379,6 +382,9 @@ typedef struct {
 
 #define MXC_F_TMR_CTRL1_OUTBEN_A_POS                   14 /**< CTRL1_OUTBEN_A Position */
 #define MXC_F_TMR_CTRL1_OUTBEN_A                       ((uint32_t)(0x1UL << MXC_F_TMR_CTRL1_OUTBEN_A_POS)) /**< CTRL1_OUTBEN_A Mask */
+
+#define MXC_F_TMR_CTRL1_ASYNC_POS                      15 /**< CTRL1_ASYNC Position */
+#define MXC_F_TMR_CTRL1_ASYNC                          ((uint32_t)(0x1UL << MXC_F_TMR_CTRL1_ASYNC_POS)) /**< CTRL1_ASYNC Mask */
 
 #define MXC_F_TMR_CTRL1_CLKSEL_B_POS                   16 /**< CTRL1_CLKSEL_B Position */
 #define MXC_F_TMR_CTRL1_CLKSEL_B                       ((uint32_t)(0x3UL << MXC_F_TMR_CTRL1_CLKSEL_B_POS)) /**< CTRL1_CLKSEL_B Mask */

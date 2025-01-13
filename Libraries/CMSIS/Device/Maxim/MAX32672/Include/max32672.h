@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,13 +28,6 @@
 #define MXC_NUMCORES 1
 
 #include <stdint.h>
-
-// TODO(ADI): Remove below after grace period. Temporarily added these includes to resolve errors
-// for grace period before eventually removing support for deprecated features. 10-24-2022
-//>>>
-#include "trimsir_regs.h"
-#include "aes_regs.h"
-//<<<
 
 #ifndef FALSE
 #define FALSE (0)
@@ -315,10 +307,6 @@ typedef enum {
 #define MXC_BASE_AES ((uint32_t)0x40207400UL)
 #define MXC_AES ((mxc_aes_regs_t *)MXC_BASE_AES)
 
-// DEPRECATED(10-24-2022): Scheduled for removal.
-typedef __attribute__((deprecated(
-    "Use MXC_AES (mxc_aes_regs_t), not the deprecated MXC_SYS_AES (mxc_sys_aes_regs_t) instance name and struct. 10-24-2022")))
-mxc_aes_regs_t mxc_sys_aes_regs_t;
 #define MXC_SYS_AES ((mxc_sys_aes_regs_t *)MXC_BASE_AES)
 
 /******************************************************************************/

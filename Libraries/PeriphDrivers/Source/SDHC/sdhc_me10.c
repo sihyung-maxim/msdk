@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +37,7 @@
 /* ************************************************************************** */
 int MXC_SDHC_Init(const mxc_sdhc_cfg_t *cfg)
 {
+#ifndef MSDK_NO_GPIO_CLK_INIT
     MXC_SYS_ClockEnable(MXC_SYS_PERIPH_CLOCK_SDHC);
 
     MXC_GPIO_Config(&gpio_cfg_sdhc_0);
@@ -45,6 +45,7 @@ int MXC_SDHC_Init(const mxc_sdhc_cfg_t *cfg)
     gpio_cfg_sdhc_1.port->vssel |= gpio_cfg_sdhc_1.mask;
     gpio_cfg_sdhc_0.port->ds_sel0 |= gpio_cfg_sdhc_0.mask;
     gpio_cfg_sdhc_1.port->ds_sel0 |= gpio_cfg_sdhc_1.mask;
+#endif
 
     return MXC_SDHC_RevA_Init((mxc_sdhc_reva_regs_t *)MXC_SDHC, cfg);
 }
@@ -86,9 +87,9 @@ unsigned int MXC_SDHC_Get_Clock_Config(void)
 unsigned int MXC_SDHC_Get_Input_Clock_Freq(void)
 {
     if (MXC_GCR->pclk_div & MXC_F_GCR_PCLK_DIV_SDHCFRQ) {
-        return SystemCoreClock >> 1; // Div by 2
+        return HIRC96_FREQ >> 1; // Div by 2
     } else {
-        return 50000000; // UG specifies a hard-coded 50Mhz value in this case
+        return 50000000; // UG specifies a hard-coded 50Mhz low-power oscillator
     }
 }
 

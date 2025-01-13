@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,15 +35,15 @@ __attribute__((aligned(512)))
 #endif
 static void (*ramVectorTable[MXC_IRQ_COUNT])(void);
 
-void NVIC_SetRAM(void)
-{
 #if defined(__ICCARM__)
-    extern void (*const __isr_vector[])(void);
+extern void (*const __isr_vector[])(void);
 #else
-    /* should be defined in starup_<device>.S */
-    extern uint32_t __isr_vector[MXC_IRQ_COUNT];
+/* should be defined in starup_<device>.S */
+extern uint32_t __isr_vector[MXC_IRQ_COUNT];
 #endif
 
+void NVIC_SetRAM(void)
+{
     memcpy(&ramVectorTable, &__isr_vector, sizeof(ramVectorTable));
     SCB->VTOR = (uint32_t)&ramVectorTable;
 }

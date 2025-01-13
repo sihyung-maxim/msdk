@@ -67,6 +67,8 @@
   Macros
 **************************************************************************************************/
 
+#warning "(ERROR): Exmaple is deprecated and non functional!"
+
 /*! \brief UART TX buffer size */
 #define PLATFORM_UART_TERMINAL_BUFFER_SIZE 2048U
 #define DEFAULT_TX_POWER 4 /* dBm */
@@ -83,8 +85,6 @@ static LlRtCfg_t mainLlRtCfg;
 #endif
 
 volatile int wutTrimComplete;
-
-extern uint8_t appCodedPhyDemo;
 
 /**************************************************************************************************
   Functions
@@ -208,7 +208,7 @@ int main(void)
 #endif
     PalCfgLoadData(PAL_CFG_ID_LL_PARAM, &mainLlRtCfg.maxAdvSets, sizeof(LlRtCfg_t) - 9);
 #if (BT_VER >= LL_VER_BT_CORE_SPEC_5_0)
-    PalCfgLoadData(PAL_CFG_ID_BLE_PHY, &mainLlRtCfg.phy2mSup, 4);
+    PalCfgLoadData(PAL_CFG_ID_BLE_PHY, (uint8_t *)&mainLlRtCfg.phy2mSup, 4);
 #endif
 
     /* Set the 32k sleep clock accuracy into one of the following bins, default is 20
@@ -245,7 +245,6 @@ int main(void)
     APP_TRACE_INFO0("Long distance scanner demo (CODED PHY S=8)");
     APP_TRACE_INFO1("BT_VER=%d", BT_VER);
     APP_TRACE_INFO0("==========================================");
-    appCodedPhyDemo = 1;
 
 #if defined(HCI_TR_EXACTLE) && (HCI_TR_EXACTLE == 1)
     WsfCsEnter();

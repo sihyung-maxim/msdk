@@ -1,9 +1,8 @@
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -161,7 +160,7 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
     /* Determine if we need to snapshot the PalBb clock */
     if (schTimerActive) {
         /* Snapshot the current WUT value with the PalBb clock */
-        MXC_WUT_Store(MXC_WUT0);
+        MXC_WUT_StoreCount(MXC_WUT0);
         preCapture = MXC_WUT_GetCount(MXC_WUT0);
         schUsec = PalTimerGetExpTime();
 
@@ -177,7 +176,7 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
         }
     } else {
         /* Snapshot the current WUT value */
-        MXC_WUT_Edge(MXC_WUT0);
+        MXC_WUT_WaitForEdge(MXC_WUT0);
         preCapture = MXC_WUT_GetCount(MXC_WUT0);
         bleSleepTicks = 0;
         schUsec = 0;
@@ -203,25 +202,26 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
         if (schTimerActive) {
             /* Stop the BLE scheduler timer */
             PalTimerStop();
-
-            /* Shutdown BB hardware */
-            PalBbDisable();
         }
+
+        /* 
+            Shutdown BB hardware 
+        */
+
+        PalBbForceDisable();
 
         LED_Off(SLEEP_LED);
         LED_Off(DEEPSLEEP_LED);
 
         MXC_LP_EnterStandbyMode();
-
         LED_On(DEEPSLEEP_LED);
         LED_On(SLEEP_LED);
 
+        /* Enable and restore the BB hardware */
+        PalBbEnable();
+        PalBbRestore();
+
         if (schTimerActive) {
-            /* Enable and restore the BB hardware */
-            PalBbEnable();
-
-            PalBbRestore();
-
             /* Restore the BB counter */
             MXC_WUT_RestoreBBClock(MXC_WUT0, BB_CLK_RATE_HZ);
 
@@ -239,7 +239,7 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
     }
 
     /* Recalculate dsWutTicks for the FreeRTOS tick counter update */
-    MXC_WUT_Edge(MXC_WUT0);
+    MXC_WUT_WaitForEdge(MXC_WUT0);
     postCapture = MXC_WUT_GetCount(MXC_WUT0);
     dsWutTicks = postCapture - preCapture;
 

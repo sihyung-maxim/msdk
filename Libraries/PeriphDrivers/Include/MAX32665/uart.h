@@ -5,10 +5,9 @@
 
 /******************************************************************************
  *
- * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. All Rights Reserved.
- * (now owned by Analog Devices, Inc.),
- * Copyright (C) 2023 Analog Devices, Inc. All Rights Reserved. This software
- * is proprietary to Analog Devices, Inc. and its licensors.
+ * Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by 
+ * Analog Devices, Inc.),
+ * Copyright (C) 2023-2024 Analog Devices, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -158,7 +157,7 @@ struct _mxc_uart_req_t {
  * @param   map            	MAP_A or MAP_B uart pins select, Has no effect incase of 
  *                          MSDK_NO_GPIO_CLK_INIT has been defined.
  *
- * @return  If successful, the actual clock frequency is returned. Otherwise, see
+ * @return  E_NO_ERROR if successful, the actual clock frequency is returned. Otherwise, see
  *          \ref MXC_Error_Codes for a list of return codes.
  */
 int MXC_UART_Init(mxc_uart_regs_t *uart, unsigned int baud, sys_map_t map);

@@ -127,7 +127,7 @@ The MSDK officially supports the following microcontrollers and evaluation platf
 * [**MAX32690**](https://www.analog.com/en/products/max32690.html):  Arm Cortex-M4 with FPU Microcontroller and Bluetooth LE 5 for Industrial and Wearables
 
     - [MAX32690EVKIT](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/MAX32690EVKIT.html)
-
+    - [AD-APARD32690-SL](https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/ad-apard32690-sl.html)
 
 ---
 
@@ -233,7 +233,7 @@ The MSDK installer can be run through a [**GUI Installation**](#gui-installation
 
     ![Figure 8](res/Fig8.jpg)
 
-7. You should now see the contents of the installation directory populated with the MSDK.  
+7. You should now see the contents of the installation directory populated with the MSDK.
 
     ![Figure 10](res/Fig10.jpg)
 
@@ -277,7 +277,7 @@ To run a _headless_ installation:
 1. [**Download**](#download) the installer executable to an accessible location.
 
 2. Ensure that you are able to run the installer with **_elevated permissions_**.
-    
+
     ???+ note "Windows"
         Open a Command Prompt or PowerShell **_as administrator_**.
 
@@ -289,7 +289,7 @@ To run a _headless_ installation:
     ???+ note "Windows"
             :::shell
             .\MaximMicrosSDK_win.exe in --root C:/MaximSDK
-    
+
     ???+ note "Ubuntu and MacOS"
             :::shell
             sudo ./MaximMicrosSDK_linux.run in --root ~/MaximSDK
@@ -297,12 +297,12 @@ To run a _headless_ installation:
 4. Follow the installer's command-line instructions to accept licenses and confirm installation size.
 
     ??? note "ℹ️ **Note: Unattended Installations**"
-        You can run the installer without any user input by auto-accepting all licenses, messages, and input. 
-        
+        You can run the installer without any user input by auto-accepting all licenses, messages, and input.
+
             :::shell
             sudo ./MaximMicrosSDK_linux.run in --root ~/MaximSDK --accept-licenses --accept-messages --confirm-command
 
-5. (Ubuntu and MacOS) Change ownership of the installation folder with: 
+5. (Ubuntu and MacOS) Change ownership of the installation folder with:
 
         :::shell
         sudo chown -R $(whoami):$(whoami) <MSDK installation folder>
@@ -362,8 +362,8 @@ To run a _headless_ installation:
             -rwxrwxrwx   1 username     username         1129 Jun 29 00:47 setenv.sh
             -rwxrwxrwx   1 username     username          300 Jun 29 00:47 updates.sh
 
-    
-    
+
+
 #### Completing the Installation on MacOS
 
 ???+ warning "⚠️ **Warning**"
@@ -446,7 +446,7 @@ The MSDK supports multiple development environments with different features that
 
 The MSDK includes Visual Studio Code ("VS Code") support through the [VSCode-Maxim](https://github.com/MaximIntegratedTechSupport/VSCode-Maxim) project.
 
-This section walks through setup, opening, and running an example project with VS Code. This material is also available in video form targeting the MAX78000 in ["Understanding Artificial Intelligence Episode 8.5 - Visual Studio Code"](https://www.analog.com/en/education/education-library/videos/6313212752112.html). 
+This section walks through setup, opening, and running an example project with VS Code. This material is also available in video form targeting the MAX78000 in ["Understanding Artificial Intelligence Episode 8.5 - Visual Studio Code"](https://www.analog.com/en/education/education-library/videos/6313212752112.html).
 
 For complete documentation, see the [Visual Studio Code](#visual-studio-code) section of this User Guide.
 
@@ -471,12 +471,12 @@ The setup below only needs to be done once per MSDK [installation](#installation
 7. Add the entries below to your user settings.json file.
 
         :::json
-        // There may be other settings up here...        
+        // There may be other settings up here...
 
         "MAXIM_PATH": "Change me!  Only use forward slashes (/) for this path",
         "update.mode": "manual",
         "extensions.autoUpdate": false,
-        
+
         // There may be other settings down here...
 
     ???+ warning "⚠️ **Setting MAXIM_PATH**"
@@ -511,7 +511,7 @@ The setup below only needs to be done once per MSDK [installation](#installation
 
     ![Figure 16](res/Fig16.jpg)
 
-6. Set the **Board Support Package** to match your evaluation platform. In VS Code, this is done by editing the `.vscode/settings.json` file and setting the `"board"`  project configuration option.  
+6. Set the **Board Support Package** to match your evaluation platform. In VS Code, this is done by editing the `.vscode/settings.json` file and setting the `"board"`  project configuration option.
 
     ???+ note "ℹ️ **Note**"
         See [Board Support Packages](#board-support-packages) for more details and a table of values.
@@ -565,7 +565,7 @@ The setup below only needs to be done once per MSDK [installation](#installation
 
 #### Setup (Eclipse)
 
-The only setup required to use Eclipse is to ensure that the "Eclipse" component has been selected during the [MSDK installation](#installation). If the MSDK is already installed, Eclipse can be retrieved using the [Maintenance Tool](#maintenance).  
+The only setup required to use Eclipse is to ensure that the "Eclipse" component has been selected during the [MSDK installation](#installation). If the MSDK is already installed, Eclipse can be retrieved using the [Maintenance Tool](#maintenance).
 
 This section is an Eclipse "quick-start" that walks through creating, building, and running a project. For complete documentation, see the [Eclipse](#eclipse) section of this User Guide.
 
@@ -648,7 +648,7 @@ source ~/MaximSDK/setenv.sh
 This command can also be added to shell startup scripts (`~/.bashrc`, `~/.zshrc`, etc.) to automate the environment setup.
 
 ???+ note "ℹ️ **Note: Automatic Updates**"
-    `setenv.sh` will automatically check for available updates to the MSDK.  This can be permanently disabled by following its prompt on startup, or by deleting/moving the `updates.sh` script in the root directory of the MSDK installation. 
+    `setenv.sh` will automatically check for available updates to the MSDK.  This can be permanently disabled by following its prompt on startup, or by deleting/moving the `updates.sh` script in the root directory of the MSDK installation.
 
     ![Figure 51](res/Fig51.jpg)
 
@@ -658,15 +658,15 @@ This command can also be added to shell startup scripts (`~/.bashrc`, `~/.zshrc`
 
         # Set MAXIM_PATH to point to the MSDK
         export MAXIM_PATH=#changeme!
-        
+
         # Add Arm Embedded GCC to path (v10.3)
         export ARM_GCC_ROOT=$MAXIM_PATH/Tools/GNUTools/10.3
         export PATH=$ARM_GCC_ROOT/bin:$PATH
-        
+
         # Add xPack RISC-V GCC to path (v12.2)
         export XPACK_GCC_ROOT=$MAXIM_PATH/Tools/xPack/riscv-none-elf-gcc/12.2.0-3.1
         export PATH=$XPACK_GCC_ROOT/bin:$PATH
-        
+
         # Add OpenOCD to path
         export OPENOCD_ROOT=$MAXIM_PATH/Tools/OpenOCD
         export PATH=$OPENOCD_ROOT:$PATH
@@ -710,7 +710,7 @@ Any "file not found" errors indicate that `MAXIM_PATH` has not been set correctl
 
         - `-r` is an option that ignores some of Make's implicit rules to improve build speed.
         - `-j` enables parallel execution of the build in the maximum number of threads.
-        
+
             ???+ warning "**⚠️ Parallel Builds**"
                 Parallel builds can mangle the console output.  To deal with this, the `--output-sync=target` option can be used.  However, _this is only available in Make version 4 or higher_.  When this option is used, `--no-print-directory` is also used to declutter the build output.
 
@@ -875,11 +875,11 @@ Once a project is opened 4 available build tasks will become available via `Term
 * It uses the GDB `load` and `compare-sections` commands, and handles launching an OpenOCD internally via a pipe connection.
 * The flashed program will be halted until the microcontroller is reset, power cycled, or a debugger is connected.
 * A debugger must be connected correctly to use this task.  Refer to the datasheet of your microcontroller's evaluation board for instructions.
-  
+
 #### Flash & Run
 
 * This is the same as the `Flash` task, but it also will launch execution of the program once flashing is complete.
-  
+
 #### Erase Flash
 
 * Completely erases all of the application code in the flash memory bank.
@@ -892,7 +892,7 @@ This section assumes a debugger is connected between the host PC and the evaluat
 
 #### Arm Core Debugging
 
-1. Run the **`flash`**  [build task](#build-tasks).  Running this task will automatically build the project if needed, flash the program binary, and halt the program execution to await a debugger connection.  
+1. Run the **`flash`**  [build task](#build-tasks).  Running this task will automatically build the project if needed, flash the program binary, and halt the program execution to await a debugger connection.
 
     **Flashing does not happen automatically when launching the debugger**. This is an intentional design choice for VS Code to allow the debugger to quickly restart the program under debug without a lengthy re-flash procedure.
 
@@ -973,7 +973,7 @@ See the [Cortex-Debug Wiki](https://github.com/Marus/cortex-debug/wiki/Disassemb
 
 #### Dual Core Debugging
 
-For microcontrollers with _both_ an Arm M4 and a RISC-V core, the _GDB (RISC-V)_ launch profile is provided to enable RISC-V debugging. 
+For microcontrollers with _both_ an Arm M4 and a RISC-V core, the _GDB (RISC-V)_ launch profile is provided to enable RISC-V debugging.
 
 ???+ note "ℹ️ **Note**"
     The RISC-V core requires setup and handoff from the Arm M4 core. As a result, this is an advanced configuration requiring a unique combination of the project's source code, Makefiles, and VSCode-Maxim project settings. Such projects are appended with the `-riscv` suffix in the project's folder name.
@@ -1019,7 +1019,7 @@ This section demonstrates how to debug `-riscv` projects in VS Code using the [m
 
 ### Project Settings
 
-`.vscode/settings.json` is the main project configuration file.  Values set here are parsed into the other .json config files.  
+`.vscode/settings.json` is the main project configuration file.  Values set here are parsed into the other .json config files.
 
 **When a change is made to this file, VS Code should be reloaded with CTRL+SHIFT+P -> Reload Window (or alternatively restarted completely) to force a re-parse.**
 
@@ -1034,7 +1034,7 @@ The following configuration options are available:
 
 #### `"MAXIM_PATH"`
 
-* This option must point to the root installation directory of the MSDK.  
+* This option must point to the root installation directory of the MSDK.
 * It should be placed in the _global_ user settings.json file during first-time VSCode-Maxim setup.  See [Getting Started with Visual Studio Code](#getting-started-with-visual-studio-code).
 
 #### `"target"`
@@ -1059,7 +1059,7 @@ The following configuration options are available:
 
 #### `"program_file"`
 
-* Sets the name of the file to flash and debug.  This is provided in case it's needed, but for most use cases should be left at its default.  
+* Sets the name of the file to flash and debug.  This is provided in case it's needed, but for most use cases should be left at its default.
 * File extension must be included.
 * Default value: `"${config:project_name}.elf"`
 
@@ -1150,7 +1150,7 @@ VS Code's intellisense engine must be told where to find the header files for yo
 
 To add additional search paths :
 
-1. Open the `.vscode/settings.json` file.  
+1. Open the `.vscode/settings.json` file.
 
 2. Add the include path(s) to the `C_Cpp.default.includePath` list.  The paths set here should contain header files, and will be searched by the Intellisense engine and when using "Go to Declaration" in the editor.
 
@@ -1160,7 +1160,7 @@ To add additional search paths :
 
 #### Option 1.  Copying a Pre-Made Project
 
-Copying a pre-made example project is a great way to get rolling quickly, and is currently the recommended method for creating new projects.  
+Copying a pre-made example project is a great way to get rolling quickly, and is currently the recommended method for creating new projects.
 
 The release package for this project (Located at `Tools/VSCode-Maxim` in the MSDK) contains a `New_Project` folder designed for such purposes. Additionally, any of the VS Code-enabled Example projects can be copied from the MSDK.
 
@@ -1279,9 +1279,9 @@ When Eclipse is launched, it will prompt for a **_workspace_** location. This is
 
 ### Building a Project
 
-1. Ensure that the Eclipse is set to the **C/C++ perspective** (top right).  
+1. Ensure that the Eclipse is set to the **C/C++ perspective** (top right).
 
-2. Select the correct project in the **Launch Configuration** dropdown. 
+2. Select the correct project in the **Launch Configuration** dropdown.
 
 3. Use the **Build** hammer button (top left) to build the project.
 
@@ -1347,16 +1347,16 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
 
         :::makefile
         # This file can be used to set build configuration
-        # variables. These variables are defined in a file called 
+        # variables. These variables are defined in a file called
         # "Makefile" that is located next to this one.
-        
+
         # For instructions on how to use this system, see
         # https://analogdevicesinc.github.io/msdk/USERGUIDE/
-        
+
         # **********************************************************
-        
+
         # Add your config here!
-        
+
         BOARD=FTHR_RevA # Set the BSP for the MAX78000FTHR
 
 - Alternatively, set **`BOARD`** on the command line when building (i.e., `make -r -j BOARD=FTHR_RevA`) to set/override the BSP for a single build.
@@ -1389,7 +1389,7 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
 ???+ note "ℹ️ **A Note on Flashing**"
     The commands below are not a comprehensive list of all the possible options for flashing.  They are the most common and useful ones.  For full documentation, see the "Flash Programming" section of the [**OpenOCD User Manual**](https://openocd.org/doc/pdf/openocd.pdf)
 
-1. [Build](#building-on-the-command-line) the project.  
+1. [Build](#building-on-the-command-line) the project.
 
 2. Connect a debug adapter between the host PC and the evaluation platform. For more detailed instructions on this hardware setup, refer to the evaluation platform's Datasheet and Quick-Start Guide, which are available on its [analog.com](https://analog.com) product page.
 
@@ -1444,15 +1444,15 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
             - ???+ note "**ℹ️ `-s $MAXIM_PATH/Tools/OpenOCD/scripts`**"
                 This option tells OpenOCD to search the `Tools/OpenOCD/scripts` folder of the MSDK installation for files.
                 ???+ warning "**⚠️ Warning: Windows**"
-                    On Windows you should use `%MAXIM_PATH%` (Command Prompt) or `$env:MAXIM_PATH` (PowerShell) to dereference the `MAXIM_PATH` environment variable 
+                    On Windows you should use `%MAXIM_PATH%` (Command Prompt) or `$env:MAXIM_PATH` (PowerShell) to dereference the `MAXIM_PATH` environment variable
 
             - ???+ note "**ℹ️ `-f target/<target>.cfg`**"
-                This option loads an OpenOCD config file for the _target microcontroller_.  Supported options can be found in the `Tools/OpenOCD/scripts/target` folder.  
+                This option loads an OpenOCD config file for the _target microcontroller_.  Supported options can be found in the `Tools/OpenOCD/scripts/target` folder.
                 ???+ warning "⚠️**Change `<target>` to match the target micro**"
 
             - ???+ note "**ℹ️ `-f interface/cmsis-dap.cfg`**"
                 This option loads an OpenOCD config file for the MAX32625PICO SWD debugger that is included with most EVKITs.  You may need to change this option for other debuggers. Supported options can be found in the `Tools/OpenOCD/scripts/interface` folder.
-            
+
             - ???+ note "`-c "program build/<filename>.elf verify; init; reset halt"`"
                 This command flashes the program binary (`program`), performs a flash verification (`verify`), initializes the connection to the target micro (`init`), and finally resets/halts the micro to prepare for debug (`reset halt`).
 
@@ -1493,7 +1493,7 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
 
 1. [Flash](#flashing-on-the-command-line) the program using the **Flash and Hold** command above.
 
-2. Launch an **_new_ separate terminal**. 
+2. Launch an **_new_ separate terminal**.
 
     ???+ warning "⚠️ On **Windows**, use the MinGW shortcut or `Tools/MSYS2/msys.bat` file to launch the MSYS2 terminal."
 
@@ -1522,7 +1522,7 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
         <https://www.gnu.org/software/gdb/bugs/>.
         Find the GDB manual and other documentation resources online at:
             <http://www.gnu.org/software/gdb/documentation/>.
-        
+
         For help, type "help".
         Type "apropos word" to search for commands related to "word"...
         Reading symbols from build/max78002.elf...
@@ -1570,11 +1570,11 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
 
         :::bash
         Continuing.
-        
+
         Breakpoint 1, main () at main.c:62
         62     printf("Hello World!\n");
 
-9. (Optional) Continue exercising the debugger. 
+9. (Optional) Continue exercising the debugger.
 
 10. Quit GDB.
 
@@ -1584,9 +1584,9 @@ For setup/quick-start, see ["Getting Started with Command-Line Development"](#ge
 
         :::bash
         A debugging session is active.
-        
+
         Inferior 1 [Remote target] will be detached.
-        
+
         Quit anyway? (y or n) [answered Y; input not from terminal]
         Detaching from program: C:\Users\User\codespace\Hello_World\build\max78002.elf, Remote target
         [Inferior 1 (Remote target) detached]
@@ -1675,14 +1675,14 @@ For example, to enable hardware floating-point acceleration for a project, the *
 
     :::Make
     # This file can be used to set build configuration
-    # variables. These variables are defined in a file called 
+    # variables. These variables are defined in a file called
     # "Makefile" that is located next to this one.
-    
+
     # For instructions on how to use this system, see
     # https://analogdevicesinc.github.io/msdk/USERGUIDE/
-    
+
     # **********************************************************
-    
+
     MFLOAT_ABI=hard # Enable hardware floating point acceleration
 
 It should also be noted that configuration variables can be set on the **command line** as well. For example
@@ -1752,7 +1752,7 @@ The following variables can be used to interface with the compiler to perform co
 | `LINKERFILE`           | Set the linkerfile to use                                  | A linkerfile is responsible for specifying the available memory banks, their layout, and the organization of program binaries memory.  The file should exist in `Libraries/CMSIS/Device/Maxim/TARGET/Source/GCC` in the MSDK, or it should be placed inside the root directory of the project. |
 | `PROJ_LDFLAGS`         | Add a linker flag to the build                             | **Use the `+=` operator with this variable**.  Flags can be passed to the linker with this option. See [GCC Options for Linking](https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html#Link-Options) |
 
-#### Build Variables for Arm Cortex-M4 Cores
+#### Build Variables for Arm Cores
 
 The following build variables are used to control options specific to the Arm Cortex-M4 core available.  They are available on all microcontrollers, and for all projects unless that project is built for a RISC-V core.
 
@@ -1761,6 +1761,8 @@ The following build variables are used to control options specific to the Arm Co
 | `MFLOAT_ABI`           | Set the floating point acceleration level                  | Sets the floating-point acceleration level.  Permitted values are `hard`, `soft`, and `softfp` (default). To enable full hardware acceleration instructions, use `hard`, but keep in mind that _all_ libraries your source code uses must also be compiled with `hard`. If there is any conflict, you'll get a linker error. For more details, see `-mfloat-abi` under [ARM Options](https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html). |
 | `DEFAULT_OPTIMIZE_FLAGS` | Override the default extra optimization flags | Extra compiler optimization flags are added to the build.  They are defined in `Libraries/CMSIS/Device/Maxim/GCC/gcc.mk`.  These can be disabled entirely by setting this variable to empty (`DEFAULT_OPTIMIZE_FLAGS=`). |
 | `DEFAULT_WARNING_FLAGS` | Override the default warning flags | Default flags controlling warning output are added in `Libraries/CMSIS/Device/Maxim/GCC/gcc.mk`.  These can be disabled entirely by setting this variable to empty (`DEFAULT_OPTIMIZE_FLAGS=`). |
+| `MCPU`           | Set the processor type                  | Set the target ARM processor.  Directly maps to `-mcpu` under [ARM Options](https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html).  This flag is handled by the MSDK and not typically changed manually. |
+| `MFPU`           | Set the FPU architecture                  | Set the floating point unit (FPU) architecture.  Directly maps to `-mfpu` under [ARM Options](https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html).  This flag is handled by the MSDK and not typically changed manually. |
 
 #### Build Variables for RISC-V Cores
 
@@ -1789,8 +1791,10 @@ The following variables can be used to enable the [available libraries](#librari
 | `LIB_LITTLEFS`         | Include the littleFS library                               | This option toggles the ["Little File System"](https://github.com/littlefs-project/littlefs) library - a small filesystem library designed for microcontrollers.  Set to `0` to disable or `1` to enable. |
 | `LIB_LWIP`             | Include the lwIP library                                   |                                                              |
 | `LIB_MAXUSB`           | Include the MaxUSB library                                 | This option toggles the inclusion of the MAXUSB library, which facilitates the use of the native USB peripherals on some microcontrollers. Set to `0` to disable or `1` to enable. |
+| `LIB_TINY_USB`         | Include the TinyUSB library                                | This option toggles the inclusion of the TinyUSB library, which facilitates the use of the native USB peripherals on some microcontrollers. Set to `0` to disable or `1` to enable. |
 | `LIB_SDHC`             | Include the SDHC library                                   | This option toggles the Secure Digital High Capacity (SDHC) library, which can be used to interface with SD cards. Additionally, it enables the [FatFS](http://elm-chan.org/fsw/ff/00index_e.html) library, which implements a generic FAT filesystem. |
 | `LIB_CLI`             | Include the MSDK's built-in CLI library                     | This option toggles the MSDK's built-in CLI library, which can be used to process received commands over UART. |
+| `LIB_USS`             | Include the USS Library                                     | This option toggles the Unified Security Software library.  It is only available via NDA. |
 
 #### Build Variables for the PeriphDrivers Library
 
@@ -1825,7 +1829,7 @@ The following build variables can be used to control how to build output is form
 
 The MSDK supports multiple parts and evaluation platforms (see [supported parts](#supported-parts)) through **"Board Support Packages" (BSPs)**. For microcontrollers with multiple evaluation platforms, multiple BSPs will be available.
 
-The role of a _BSP_ is to provide a hardware abstraction layer for the initialization and management of board-level hardware such as serial interfaces, pushbuttons, LEDs, external peripheral devices, TFT displays, etc. which will vary between evaluation platforms. The BSP abstraction layer also improves code portability to custom devices.  
+The role of a _BSP_ is to provide a hardware abstraction layer for the initialization and management of board-level hardware such as serial interfaces, pushbuttons, LEDs, external peripheral devices, TFT displays, etc. which will vary between evaluation platforms. The BSP abstraction layer also improves code portability to custom devices.
 
 ???+ note "ℹ️ **Note**"
     The first task when opening or creating any project is to ensure the BSP is set correctly.
@@ -1866,6 +1870,7 @@ The name of a BSP's folder is used with the `BOARD` [build configuration variabl
 | MAX32675FTHR                                 | `MAX32675`     | `FTHR_Apps_B`  |
 | [MAX32680EVKIT](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/max32680evkit.html)     | `MAX32680`     | `EvKit_V1`     |
 | [MAX32690EVKIT](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/MAX32690EVKIT.html)                                | `MAX32690`     | `EvKit_V1`     |
+| [AD-APARD32690-SL](https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/ad-apard32690-sl.html)     | `MAX32690`    | `APARD`   |
 | [MAX78000EVKIT](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/max78000evkit.html)     | `MAX78000`     | `EvKit_V1`     |
 | [MAX78000FTHR](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/max78000fthr.html)      | `MAX78000`     | `FTHR_RevA`    |
 | [MAXREFDES178](https://www.analog.com/en/design-center/reference-designs/maxrefdes178.html)                                          | `MAX78000`     |  `MAXREFDES178` |
@@ -1884,7 +1889,7 @@ For example, the MAX78000's `system_max78000.c` startup file shows that `Board_I
     * implemented by the application for early initializations. If a value other
     * than '0' is returned, the C runtime initialization will be skipped.
     *
-    * You may over-ride this function in your program by defining a custom 
+    * You may over-ride this function in your program by defining a custom
     *  PreInit(), but care should be taken to reproduce the initialization steps
     *  or a non-functional system may result.
     */
@@ -1903,7 +1908,7 @@ For example, the MAX78000's `system_max78000.c` startup file shows that `Board_I
 
     /* This function is called just before control is transferred to main().
     *
-    * You may over-ride this function in your program by defining a custom 
+    * You may over-ride this function in your program by defining a custom
     *  SystemInit(), but care should be taken to reproduce the initialization
     *  steps or a non-functional system may result.
     */
@@ -1945,7 +1950,7 @@ The name of the BSP's root folder will be the string used with the `BOARD` [buil
 
 #### BSP Search Directory
 
-By default, the MSDK searches for BSPs in the `Libraries/Boards` folder for each microcontroller.  This can be changed using the `BSP_SEARCH_DIR` [build configuration variable](#build-configuration-variables), which allows users to load a BSP from a directory outside of the MSDK.  The MSDK also uses the `BOARD` variable in its search path.  
+By default, the MSDK searches for BSPs in the `Libraries/Boards` folder for each microcontroller.  This can be changed using the `BSP_SEARCH_DIR` [build configuration variable](#build-configuration-variables), which allows users to load a BSP from a directory outside of the MSDK.  The MSDK also uses the `BOARD` variable in its search path.
 
 For example, the configuration...
 
@@ -2088,12 +2093,12 @@ The Peripheral Driver API's source code is organized as follows:
 - **Source files _(.c)_** can be found in the `Libraries/PeriphDrivers/Source` folder.
     - These files contain the function _definitions_ for the API - the _implementations_ of the functions declared by the header files.
 
-The _**implementation**_ files are further organized based on _**die type**_ and **_hardware revision_**. This is worth noting when browsing or debugging through the drivers.  
+The _**implementation**_ files are further organized based on _**die type**_ and **_hardware revision_**. This is worth noting when browsing or debugging through the drivers.
 
 - The **_die type_** files follow the **`_ESXX`** , **`_MEXX`** , or **`_AIXX`** naming convention.
     - These files' responsibility is to manage microcontroller-specific implementation details that may interact with other peripheral APIs _before_ ultimately calling the revision-specific files.  See [Die Types to Part Numbers](#die-types-to-part-numbers)
 
-- The **_hardware revision_** files follow the **`_revX`** naming convention.  
+- The **_hardware revision_** files follow the **`_revX`** naming convention.
     - These files contain the _pure_ driver implementation for a peripheral block and typically interact with the hardware almost entirely at the register level.
 
 #### Die Types to Part Numbers
@@ -2118,17 +2123,47 @@ The following table matches external part numbers to internal die types.  This i
     | MAX78000 | AI85 |
     | MAX78002 | AI87 |
 
+#### `MSDK_NO_GPIO_CLK_INIT`
+
+Most Peripheral Driver initialization routines involve enabling system clocks, setting clock dividers, and configuring GPIO pins.  In some cases (such as for Zephyr), frameworks or tools offer their own mechanisms for handling this, or it's desirable to manually handle it in custom application code.  
+
+The MSDK offers a mechanism for disabling the automatic initialization of clocks and GPIO pins via the `MSDK_NO_GPIO_CLK_INIT` compiler definition.  To enable this for a project, add it via the `PROJ_CFLAGS` [build configuration variable](#build-variables-for-the-compiler) using the following syntax:
+
+```Makefile
+#project.mk
+
+PROJ_CFLAGS += -DMSDK_NO_GPIO_CLK_INIT
+```
+
+???+ note "ℹ️ **Syntax Note:**"
+    The `-D` flag tells the compiler to define a symbol at compile-time.  It should be followed by the symbol we wish to define.  In this case, `MSDK_NO_GPIO_CLK_INIT`.
+
+#### Peripheral Driver Build Variables
+
+| Configuration Variable | Description                                                | Details                                                      |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+|                        |                                                            |                                                              |
+| `PINS_FILE`               | Override pin definitions                   | This option can be used to override the default GPIO definitions used by the peripheral drivers, which can be found in the `Libraries/PeriphDrivers/Source/SYS/pins_xx.c` files in the MSDK.  The file specified by this option will be passed to the build instead of the default.  It's suggested to copy the default file first as a template before making modifications.  |
+
 ---
 
 ### CMSIS-DSP
 
 The CMSIS-DSP library provides a suite of common **Digital Signal Processing _(DSP)_** functions that take advantage of hardware accelerated _Floating Point Unit (FPU)_ available on microcontrollers with Arm Cortex-M cores. This library is distributed in the MSDK as a pre-compiled static library file, and the MSDK maintains a port of the official code examples in the **ARM-DSP** [Examples](https://github.com/analogdevicesinc/msdk/tree/main/Examples) folder for each microcontroller.
 
-Please refer to the [CMSIS-DSP official documentation](https://www.keil.com/pack/doc/CMSIS/DSP/html/index.html) for more detailed documentation on the library functions and usage.
+Please refer to the [CMSIS-DSP official documentation](https://arm-software.github.io/CMSIS-DSP/v1.16.2/index.html) for more detailed documentation on the library functions and usage.
 
 #### CMSIS-DSP Supported Parts
 
 - All microcontrollers with a Cortex M4 core are supported.
+
+#### CMSIS-DSP Build Variables
+
+| Configuration Variable | Description                                                | Details                                                      |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+|                        |                                                            |                                                              |
+| `CMSIS_DSP_VERSION`    | (Optional) Set the CMSIS-DSP version to use.               | Defaults to `1.16.2`, which is currently the only supported version. |
+
 
 ---
 
@@ -2149,13 +2184,27 @@ The Cordio library warrants its own separate documentation. See the **[Cordio BL
 
 ### MAXUSB
 
-The MAXUSB library provides a higher-level interface for utilizing the built-in USB controller hardware available on some microcontrollers. This allows the microcontroller to enumerate as a USB device without the need for an external USB controller IC.
+The MAXUSB library provides a higher-level interface for utilizing the built-in USB controller hardware available on some microcontrollers. This allows the microcontroller to enumerate as a USB device without the need for an external USB controller IC.  MAXUSB provides a finer level of control of USB events and classes than TinyUSB.
 
 #### MAXUSB Supported Parts
 
 - MAX32570
 - MAX32650
 - MAX32655 and MAX32656
+- MAX32665-MAX32666
+- MAX32690
+- MAX78002
+
+---
+
+### TinyUSB
+
+The TinyUSB library provides a high-level interface for utilizing the built-in USB controller hardware available on some microcontrollers. This allows the microcontroller to enumerate as a USB device without the need for an external USB controller IC. **[TinyUSB](https://github.com/hathach/tinyusb) provides a cross-platform USB stack for embedded systems, with a higher level of abstraction than MAXUSB,
+supporting most standard USB device classes.
+
+#### TinyUSB Supported Parts
+
+- MAX32650
 - MAX32665-MAX32666
 - MAX32690
 - MAX78002
@@ -2209,6 +2258,12 @@ Once enabled, the following [build configuration variables](#build-configuration
 
 FreeRTOS is supported by all parts in the MSDK.  See the `FreeRTOSDemo` example application.
 
+#### FreeRTOS Build Variables
+
+| Configuration Variable | Description                                                | Details                                                      |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| `FREERTOS_HEAP_TYPE`            | Specify the method of heap allocation to use for the FreeRTOS API | FreeRTOS provides options for the heap management alogirthms to optimize for memory size, speed, and risk of heap fragmentation. For more details, visit the [FreeRTOS MemMang Docs](https://www.freertos.org/a00111.html).  Acceptable values are `1`, `2`, `3`, `4`, or `5`. The default value is `4` for heap_4. |
+
 #### FreeRTOS-Plus
 
 [FreeRTOS-Plus](https://www.freertos.org/FreeRTOS-Plus/index.html) is an additional library that implements addon functionality for the FreeRTOS kernel.  The MSDK maintains support for some, but not all, available addons.
@@ -2233,6 +2288,204 @@ All parts in the MSDK support the Coremark library via a `Coremark` example appl
 
 ???+ note "ℹ️ **Note**"
     The source code of the `Coremark` examples are somewhat unique.  They only contain a `core_portme.c`/`core_portme.h`.  These files are provided by CoreMark libraries to give the MSDK an implementation layer for a few hardware-dependent functions.  Otherwise, the remainder of the source code (located in `Libraries/Coremark`) must remain unmodified to comply with the CoreMark rules.
+
+### Unity Test Framework
+
+The [Unity Test Project](https://github.com/ThrowTheSwitch/Unity) is a simple unit testing framework for C.  It can be used to run hardware-in-the-loop tests on MSDK microcontrollers, as well as more individual unit tests compiled and run on a developer's host machine to test less hardware-dependent software abstractions.
+
+See [Build Variables for Toggling Libraries](#build-variables-for-toggling-libraries) for instructions on enabling the Unity Test framework.
+
+#### Unity Test Supported Parts
+
+- All
+
+#### Running Tests on a Target Micro
+
+The following code snippet shows how a simple sequence of tests might be run on a target microcontroller using the Unity test library.  Once unity is [enabled](#build-variables-for-toggling-libraries), including the `"unity.h"` header file grants access to useful assertions and macros.  The project can then be [built and run](#building-and-running-a-project-vs-code) like any other MSDK project.
+
+```C
+#include "unity.h"
+
+// *****************************************************************************
+int main(void)
+{
+    UnityBegin(__FILE__);
+
+    Unity.NumberOfTests++;
+    TEST_ASSERT_EQUAL(1 + 1, 2);
+
+    Unity.NumberOfTests++;
+    TEST_ASSERT_NOT_EQUAL(1 + 1, 0);
+
+    return (UnityEnd());
+}
+```
+
+The results of the test will be sent to the microcontroller's serial console output (defined by `CONSOLE_UART` in the [BSP](#board-support-packages)), and can be viewed from a serial terminal.
+
+```serial
+-----------------------
+2 Tests 0 Failures 0 Ignored 
+OK
+```
+
+For a more comprehensive list of available assertions see the [Unity Assertions Documentation](https://github.com/ThrowTheSwitch/Unity/blob/master/docs/UnityAssertionsReference.md).
+
+#### Running Tests on a Host Machine
+
+When the Unity Test framework is enabled, a new build target `test` becomes available.  When `make test` is run, it compiles the source code in the `test` sub-folder of the current project into a single binary that will run on the developer's host PC.  The test results are printed to the screen and a non-zero return code is passed to the host process in the case of any failures.  Currently, the tools are set up to do this with GCC.
+
+This is useful for developing unit-level testing for more abstract software.
+
+For example, assume there is a simple function for adding two `uint8_t` in the current project that we would like to unit test.
+
+```C
+// simple_code.c
+#include <stdint.h>
+
+uint8_t simple_add(uint8_t x, uint8_t y)
+{
+    return x + y;
+}
+```
+
+In the `test` folder of our project, we can implement the following tests in a file called `test_functions.c`
+
+```C
+// test/test_functions.c
+#include <stdint.h>
+#include "unity.h"
+
+// Adding an 'extern' declaration of the function to test gets this file access to it 
+extern uint8_t simple_add(uint8_t x, uint8_t y);
+
+// Utility functions for unit testing setup/clean-up.  Empty for this simple example.
+void setUp(void) {}
+void tearDown(void) {}
+
+// Validate that 'simple_add' 3+4 == 7
+void test_simple_add_ok(void)
+{
+    TEST_ASSERT_EQUAL(7, simple_add(3, 4));
+}
+
+// Check if 'simple_add' 3+4 == -1
+// In this case, we expect this to fail since we are using uint8_t
+void test_simple_add_fail(void)
+{
+    TEST_ASSERT_EQUAL(-1, simple_add(3, -4));
+}
+```
+
+A top-level `main` function for driving these test functions also needs to be written.  Unity features scripts for generating these top-level functions automagically (see [here](https://github.com/ThrowTheSwitch/Unity/blob/master/docs/UnityHelperScriptsGuide.md)), or they can be written manually.  For this example, the output of the helper script looks as follows and is saved to the `test/test_runner.c` file.
+
+```C
+// test/test_runner.c
+/* AUTOGENERATED FILE. DO NOT EDIT. */
+
+/*=======Test Runner Used To Run Each Test Below=====*/
+#define RUN_TEST(TestFunc, TestLineNum)            \
+    {                                              \
+        Unity.CurrentTestName = #TestFunc;         \
+        Unity.CurrentTestLineNumber = TestLineNum; \
+        Unity.NumberOfTests++;                     \
+        if (TEST_PROTECT()) {                      \
+            setUp();                               \
+            TestFunc();                            \
+        }                                          \
+        if (TEST_PROTECT()) {                      \
+            tearDown();                            \
+        }                                          \
+        UnityConcludeTest();                       \
+    }
+
+/*=======Automagically Detected Files To Include=====*/
+#include "unity.h"
+#include <setjmp.h>
+#include <stdio.h>
+
+/*=======External Functions This Runner Calls=====*/
+extern void setUp(void);
+extern void tearDown(void);
+extern void test_simple_add_ok(void);
+extern void test_simple_add_fail(void);
+
+/*=======Test Reset Option=====*/
+void resetTest(void);
+void resetTest(void)
+{
+    tearDown();
+    setUp();
+}
+
+/*=======MAIN=====*/
+int main(void)
+{
+    UnityBegin("test_functions.c");
+    RUN_TEST(test_simple_add_ok, __LINE__);
+    RUN_TEST(test_simple_add_fail, __LINE__);
+
+    return (UnityEnd());
+}
+```
+
+Let's also assume that the source code for `simple_add` exists in a file `simple_code.c` in the root directory of the project.  We'll need to add it to the host machine's build with the `TEST_SRCS` [build configuration variable](#build-configuration-variables).  So `project.mk` would look like this:
+
+```Makefile
+# This file can be used to set build configuration
+# variables.  These variables are defined in a file called 
+# "Makefile" that is located next to this one.
+
+# For instructions on how to use this system, see
+# https://analogdevicesinc.github.io/msdk/USERGUIDE/#build-system
+
+# **********************************************************
+
+# Add your config here!
+LIB_UNITY = 1
+
+# Add 'simple_code.c' to the compilation list for any host-side tests run on `make test`
+# Everything else in the 'test' folder will get added automatically.
+TEST_SRCS += simple_code.c
+```
+
+Now, running `make test` will result in the following output:
+
+```serial
+~/repos/msdk/Examples/MAX32690/Unity_Test (feat/unity*) » make test
+Loaded project.mk
+****************************************************************************
+* Analog Devices MSDK
+* v2024_02-78-g7542d6f98e
+* - User Guide: https://analogdevicesinc.github.io/msdk/USERGUIDE/
+* - Get Support: https://www.analog.com/support/technical-support.html
+* - Report Issues: https://github.com/analogdevicesinc/msdk/issues
+* - Contributing: https://analogdevicesinc.github.io/msdk/CONTRIBUTING/
+****************************************************************************
+- MKDIR /home/jhcarter/repos/msdk/Examples/MAX32690/Unity_Test/build/unittest
+- CC /home/jhcarter/repos/msdk/Examples/MAX32690/Unity_Test/build/unittest/max32690_unittest
+- RUN /home/jhcarter/repos/msdk/Examples/MAX32690/Unity_Test/build/unittest/max32690_unittest
+test_functions.c:42:test_simple_add_ok:PASS
+test_functions.c:15:test_simple_add_fail:FAIL: Expected -1 Was 255
+
+-----------------------
+2 Tests 1 Failures 0 Ignored 
+FAIL
+make: *** [/home/jhcarter/repos/msdk/Libraries/Unity/unity.mk:78: test] Error 1
+```
+
+The output shows `simple_add` behaves as expected for `3+4`, but not for `3+(-4)`.  In this case, the unit testing has caught 8-bit overflow on the unsigned `uint8_t` type.  This demonstrates the value of implementing unit tests, as well as a case where the tests can be run more generically on a host platform, independent of the target microcontroller's hardware.
+
+For additional documentation, see the [Unity Getting Started Guide](https://github.com/ThrowTheSwitch/Unity/blob/master/docs/UnityGettingStartedGuide.md)
+
+#### Unity Build Configuration Variables
+
+| Configuration Variable | Description                                                | Details                                                      |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| `TEST_CC`              | Compiler to use for targeting the native host machine      | This option sets the compiler to use when running `make test` to run unit tests on the host machine.  It defaults to `gcc`. |
+| `TEST_BUILD_DIR`       | Build output directory for `make test`                     | This option sets the build output directory when running `make test`.  It defaults to a `build/unittest` folder inside the current project. |
+| `TEST_SRC_DIR`         | Where to look for source files for `make test`             | When `make test` is run, the path specified by this option will be non-recursively searched for `.c` files to compile into the native host's unit test program.  It defaults to the `test` folder inside the current project. |
+| `TEST_OUTPUT_BINARY`   | Set the output filename when `make test` is run | When `make test` is run, the output binary will be saved to `$(TEST_BUILD_DIR)/$(TEST_OUTPUT_BINARY)` which may vary from project to project.  This option can be used to solidify the output filename for integration with automated CI/CD workflows. |
 
 ## Examples
 
@@ -2312,7 +2565,7 @@ It's good practice to update the PICO's firmware to the latest version, which ca
 
 #### How to Unlock a Microcontroller That Can No Longer Be Programmed
 
-The [debug limitations](#debug-limitations) of the MSDK's supported parts may make some devices difficult to connect to if bad firmware has been flashed.  In such cases, the device can attempt to be recovered from the “locked out” firmware by mass erasing the application code from the flash memory bank.  Note that this does not always work.  Success will depend on a small window being available for the debugger to connect immediately after reset. 
+The [debug limitations](#debug-limitations) of the MSDK's supported parts may make some devices difficult to connect to if bad firmware has been flashed.  In such cases, the device can attempt to be recovered from the “locked out” firmware by mass erasing the application code from the flash memory bank.  Note that this does not always work.  Success will depend on a small window being available for the debugger to connect immediately after reset.
 
 Before following the procedure below, ensure that you have updated the PICO debugger firmware to the latest version. See [Updating the MAX32625PICO (PICO) Debug Adapter Firmware](#updating-the-max32625pico-pico-debug-adapter-firmware)
 
@@ -2386,6 +2639,12 @@ The SPI v2 Library is the latest version of the MSDK SPI drivers which highlight
 - Still supports SPI v1 function prototypes for backwards-compatibility.
 - Bug fixes from the SPI v1 API.
 
+#### SPI v2 Supported Parts
+
+- MAX32572
+- MAX32690
+- MAX78002
+
 #### Porting Projects to use SPI v2
 
 The latest SPI examples in the MSDK defaults to build the SPI v1 libraries. Set the `MXC_SPI_VERSION` [build configuration variable](#build-configuration-variables) to `v2` (case sensitive) use the SPI v2 API.
@@ -2401,23 +2660,23 @@ The input parameters for the `MXC_SPI_Init(...)` function were updated in SPI v2
 SPI v1:
 
     :::C
-    int MXC_SPI_Init(mxc_spi_regs_t *spi, 
-                    int masterMode, 
-                    int quadModeUsed, 
-                    int numSlaves, 
-                    unsigned ssPolarity, 
-                    unsigned int hz, 
+    int MXC_SPI_Init(mxc_spi_regs_t *spi,
+                    int masterMode,
+                    int quadModeUsed,
+                    int numSlaves,
+                    unsigned ssPolarity,
+                    unsigned int hz,
                     mxc_spi_pins_t pins)
 
 SPI v2:
 
     :::C
-    int MXC_SPI_Init(mxc_spi_regs_t *spi, 
-                    mxc_spi_type_t controller_target, 
-                    mxc_spi_interface_t if_mode, 
-                    int numTargets, 
-                    uint8_t ts_active_pol_mask, 
-                    uint32_t freq, 
+    int MXC_SPI_Init(mxc_spi_regs_t *spi,
+                    mxc_spi_type_t controller_target,
+                    mxc_spi_interface_t if_mode,
+                    int numTargets,
+                    uint8_t ts_active_pol_mask,
+                    uint32_t freq,
                     mxc_spi_pins_t pins)
 
 Input Parameters:
@@ -2513,4 +2772,4 @@ The DMA is initialized in `MXC_SPI_DMA_Init(...)` or `MXC_SPI_Config(...)`. This
         MXC_SPI_DMA_RX_Handler(SPI);
     }
 
-The SPI v1 API requires `MXC_DMA_Handler()` to be called in the TX and RX DMA Channel interrupt handlers. Following the generic vector names used in the previous section, the SPI v2 supplies its own TX/RX DMA Handler processing functions (`MXC_SPI_DMA_RX_Handler(...)` and `MXC_SPI_DMA_RX_Handler(...)`) that must be called within their appropriate DMA channel interrupt handlers. 
+The SPI v1 API requires `MXC_DMA_Handler()` to be called in the TX and RX DMA Channel interrupt handlers. Following the generic vector names used in the previous section, the SPI v2 supplies its own TX/RX DMA Handler processing functions (`MXC_SPI_DMA_RX_Handler(...)` and `MXC_SPI_DMA_RX_Handler(...)`) that must be called within their appropriate DMA channel interrupt handlers.
