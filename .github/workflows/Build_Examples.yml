@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by
 # Analog Devices, Inc.),
-# Copyright (C) 2023-2024 Analog Devices, Inc.
+# Copyright (C) 2023-2025 Analog Devices, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -404,43 +404,43 @@ jobs:
           choco install sccache
 
           # Prepend ccache into the PATH
-          echo "$ProgramFiles/sccache" >> $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/sccache" >> $GITHUB_PATH
 
           # Setup sccache links
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-addr2line.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-ar.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-as.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-c.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-c++filt.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-cpp.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-elfedit.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-g.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcc.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcc-10.2.1.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcc-ar.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcc-nm.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcc-ranlib.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcov.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcov-dump.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gcov-tool.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gdb-add-index.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gdb-add-index-py.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gdb-py.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-gprof.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-ld.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-ld.bfd.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-lto-dump.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-nm.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-objcopy.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-objdump.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-ranlib.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-readelf.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-size.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-strings.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-strip.exe
-          ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/riscv-none-embed-gcc.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-addr2line.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-ar.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-as.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-c.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-c++filt.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-cpp.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-elfedit.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-g.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcc.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcc-10.2.1.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcc-ar.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcc-nm.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcc-ranlib.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcov.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcov-dump.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gcov-tool.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gdb-add-index.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gdb-add-index-py.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gdb-py.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-gprof.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-ld.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-ld.bfd.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-lto-dump.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-nm.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-objcopy.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-objdump.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-ranlib.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-readelf.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-size.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-strings.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-strip.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/riscv-none-embed-gcc.exe
 
-          echo "$ProgramFiles/bin" >> $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
         shell: bash
 
       - name: Setup Python
