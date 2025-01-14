@@ -407,7 +407,6 @@ jobs:
           echo "$ProgramFiles/sccache" >> $GITHUB_PATH
 
           # Setup sccache links
-          mkdir $ProgramFiles/bin
           ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-addr2line.exe
           ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-ar.exe
           ln -s $ProgramFiles/sccache/sccache.exe $ProgramFiles/bin/arm-none-eabi-as.exe
