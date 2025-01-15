@@ -1,4 +1,4 @@
-###############################################################################
+o ###############################################################################
 #
 # Copyright (C) 2022-2023 Maxim Integrated Products, Inc. (now owned by
 # Analog Devices, Inc.),
@@ -408,6 +408,7 @@ jobs:
 
           echo "Workspace: $GITHUB_WORKSPACE"
 
+          echo "PWD: $(pwd)"
           mkdir -p $GITHUB_WORKSPACE/bin
           echo "$(ls -al $GITHUB_WORKSPACE/bin)"
 
