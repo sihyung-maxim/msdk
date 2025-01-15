@@ -412,7 +412,7 @@ jobs:
           ls -al $GITHUB_WORKSPACE/bin
 
           # Setup sccache links
-          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-addr2line.exe
+          ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE\bin\arm-none-eabi-addr2line.exe
           ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-ar.exe
           ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-as.exe
           ln -s $GITHUB_WORKSPACE/sccache/sccache.exe $GITHUB_WORKSPACE/bin/arm-none-eabi-c.exe
